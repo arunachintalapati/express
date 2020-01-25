@@ -22,6 +22,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+app.use('/problem', function(){
+  throw new Error('Some thing wrong!');
+})
+
 var appInsights = require('applicationinsights')
 appInsights.setup('d8a1a95b-58ca-4923-8b09-e47ef67636f7');
 appInsights.start();
@@ -30,13 +34,7 @@ appInsights.start();
 app.use(function(req, res, next) {
   next(createError(404));
 });
-app.use('/problem', function(){
-  throw new Error('Some thing wrong!');
-})
 
-app.use(function(req, res, next){
-  next(createError(404));
-})
 
 // error handler
 app.use(function(err, req, res, next) {
