@@ -22,16 +22,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+var appInsights = equire('applicationinsights')
+appInsights.setup('d8a1a95b-58ca-4923-8b09-e47ef67636f7');
+appInsights.start();
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
+app.use('problem', function(){
+  throw new Error('Some thing wrong!');
+})
 
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  appInsights.defaultClinet.trackException({exception: err});
 
   // render the error page
   res.status(err.status || 500);
