@@ -30,8 +30,12 @@ appInsights.start();
 app.use(function(req, res, next) {
   next(createError(404));
 });
-app.use('problem', function(){
+app.use('/problem', function(){
   throw new Error('Some thing wrong!');
+})
+
+app.use(function(req, res, next){
+  next(createError(404));
 })
 
 // error handler
