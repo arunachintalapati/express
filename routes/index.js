@@ -3,9 +3,9 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  var model={
+  var model= {
     title: 'Azure',
-    mesage: process.env.MESSAGE || "This is development"
+    message: process.env.MESSAGE || "This is development"
   }
   res.render('index', model);
 });
