@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-var appInsights = equire('applicationinsights')
+var appInsights = require('applicationinsights')
 appInsights.setup('d8a1a95b-58ca-4923-8b09-e47ef67636f7');
 appInsights.start();
 
@@ -40,7 +40,7 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  appInsights.defaultClinet.trackException({exception: err});
+  appInsights.defaultClient.trackException({exception: err});
 
   // render the error page
   res.status(err.status || 500);
